@@ -1,9 +1,13 @@
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -22,8 +26,10 @@ public class Game {
     JButton startButton, choice1, choice2, choice3;
     JTextArea mainTextArea;
 
-    String position;
+    String position , clickSound;
     ImageIcon image;
+
+    SoundEffect se = new SoundEffect();
 
     TitleScreenHandler tsHandler = new TitleScreenHandler();
     ChoiceHandler choiceHandler = new ChoiceHandler();
@@ -31,7 +37,9 @@ public class Game {
     public static void main(String[] args){
         new Game();
 
+
     }
+
     public Game(){
             //Windows
         window = new JFrame();
@@ -68,7 +76,11 @@ public class Game {
         con.add(titleNamePanel);
         con.add(startButtonPanel);
 
+
     }
+
+
+
 
     public void createGameScreen(){
                 //Game Screen
@@ -137,9 +149,39 @@ public class Game {
         imagePanel.add(imageLabel);
         con.add(imagePanel);
 
+        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_00_01_39-00_02_20.wav";
+
+
         beginningScene();
 
     }
+
+    public class  SoundEffect{
+
+        Clip clip;
+
+        public void setFile(String soundFilename){
+
+            try {
+                File file = new File(soundFilename);
+                AudioInputStream sound = AudioSystem.getAudioInputStream(file);
+                clip = AudioSystem.getClip();
+                clip.open(sound);
+            }
+            catch (Exception e){
+
+            }
+
+        }
+
+        public void play(){
+
+            clip.setFramePosition(0);
+            clip.start();
+        }
+    }
+
+
 //    public void playerSetup(){
 //
 //        beginningScene();
@@ -179,9 +221,14 @@ public class Game {
     }
 
     public void stayStill(){
+
+
+
+
         position = "stayStill";
         mainTextArea.setText("You have been killed by the rabbit. ");
         choice1.setText(">>>");
+
         choice2.setText("");
         choice3.setText("");
 
@@ -235,6 +282,11 @@ public class Game {
         image = new ImageIcon("C:\\Users\\tello\\Images\\src\\Tello\\alice_img1_3_30.png");
         imageLabel.setIcon(image);
 
+        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_00_58_57-00_59_00.wav";
+
+        se.setFile(clickSound);
+        se.play();
+
         position = "babyCrying";
         mainTextArea.setText("Alice hears a baby crying in a house she bites a stick of wood to \nenlarge the house\nAlice hears a knock.\n" +
                 "Alice says 'Come in!/' ");
@@ -278,6 +330,305 @@ public class Game {
         choice3.setVisible(false);
     }
 
+    public void eatingFly(){
+///needs new image and sound
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\flies_to_eliminate.png");
+        imageLabel.setIcon(image);
+
+        position = "eatingFly";
+        mainTextArea.setText("Press Button x to eliminate flies with frog-footman tongue.");
+        choice1.setText("X");
+        choice2.setText("");
+        choice3.setText("");
+
+        choice1.setVisible(true);
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+    }
+
+    public void frogmanLeaves(){
+///needs image and sound
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\frogman_window.png");
+        imageLabel.setIcon(image);
+
+        position = "frogmanLeaves";
+        mainTextArea.setText("Frog-footman leaves by jumping out the window.  \n\nAlice notices a sound\nPursue the sound?");
+        choice1.setText("Yes!");
+        choice2.setText("");
+        choice3.setText("");
+
+        choice1.setVisible(true);
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+    }
+
+    public void askRabbit(){
+
+
+            //Images for Method
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\rabbit_with_baby_40.png");
+        imageLabel.setIcon(image);
+            //Audio for Method
+        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_01_13-01_01_16.wav";
+        se.setFile(clickSound);
+        se.play();
+
+        position = "askRabbit";
+        mainTextArea.setText("You see the rabbit.\nYou ask of the rabbit, 'sir please!\nYou are now rabbit!" +
+                "You are feeding a baby and you hear Alice knocking at the door.\n\nThere are dishes nearby..\n");
+        choice1.setText("Throw dishes");
+        choice2.setText("Throw baby");
+        choice3.setText("");
+
+        choice1.setVisible(true);
+        choice2.setVisible(true);
+        choice3.setVisible(false);
+    }
+
+    public void babyThrown(){
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\now_alice_50.png");
+        imageLabel.setIcon(image);
+        //Audio for Method
+//        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_01_13-01_01_16.wav";
+//        se.setFile(clickSound);
+//        se.play();
+
+        position = "babyThrown";
+        mainTextArea.setText("Baby thrown. Baby is pig!\nYou are now Alice!  Alice releases pig.\nYou pick up the invitation.");
+        choice1.setText("Read invitation");
+        choice2.setText("Disregard message");
+        choice3.setText("");
+
+        choice1.setVisible(true);
+        choice2.setVisible(true);
+        choice3.setVisible(false);
+
+    }
+
+    public void whoCares(){
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\rabbit_with_baby_40.png");
+        imageLabel.setIcon(image);
+//        //Audio for Method
+//        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_01_13-01_01_16.wav";
+//        se.setFile(clickSound);
+//        se.play();
+
+        position = "whoCares";
+        mainTextArea.setText("Who cares what the queen wants!\n\n\nYou fell asleep.");
+        choice1.setText("");
+        choice2.setText(">>>");
+        choice3.setText("");
+
+        choice1.setVisible(false);
+        choice2.setVisible(true);
+        choice3.setVisible(false);
+
+    }
+
+    public void queenNote(){
+
+        //needs image
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\rabbit_with_baby_40.png");
+        imageLabel.setIcon(image);
+        //Audio for Method
+//        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_10_36-01_10_43.wav";
+//        se.setFile(clickSound);
+//        se.play();
+
+        position = "queenNote";
+        mainTextArea.setText("Greetings,\n" + "\n" + "Come to the palace.\n" + "\n" + "Firmly,\n" + "The Queen\n");
+        choice1.setText(">>>");
+        choice2.setText("");
+        choice3.setText("");
+
+        choice1.setVisible(true);
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+
+    }
+
+    public void noRoom(){
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\rabbit_with_baby_40.png");
+        imageLabel.setIcon(image);
+        //Audio for Method
+        
+        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_10_36-01_10_43.wav";
+        se.setFile(clickSound);
+        se.play();
+
+        position = "noRoom";
+        mainTextArea.setText("You are being shouted at by the Mad Hatter.\n\nNo room, no room, no room, no room, no room!' is what you hear\n" +
+                "You are at a door.\nWould you like to enter?");
+        choice1.setText("");
+        choice2.setText("Yes");
+        choice3.setText("");
+
+        choice1.setVisible(false);
+        choice2.setVisible(true);
+        choice3.setVisible(false);
+
+    }
+
+
+    public void climbSteps(){
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\up_the_stairs_40.png");
+        imageLabel.setIcon(image);
+        //Audio for Method
+//        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_01_13-01_01_16.wav";
+//        se.setFile(clickSound);
+//        se.play();
+
+        position = "climbSteps";
+        mainTextArea.setText("You see the rabbit, would you like to chase him?\n\nPress Climb button to climb steps");
+        choice1.setText("Climb");
+        choice2.setText("");
+        choice3.setText("");
+
+        choice1.setVisible(true);
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+
+    }
+//
+    public void followQueen(){
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\rabbit_img2_40.png");
+        imageLabel.setIcon(image);
+        //Audio for Method
+//        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_01_13-01_01_16.wav";
+//        se.setFile(clickSound);
+//        se.play();
+
+        position = "followQueen";
+        mainTextArea.setText("You have climbed the stairs  You follow him.\nAfter following him you see the queen." +
+                "Would you like to know what the queen wants?");
+        choice1.setText("Yes");
+        choice2.setText("No");
+        choice3.setText("");
+
+        choice1.setVisible(true);
+        choice2.setVisible(true);
+        choice3.setVisible(false);
+
+    }
+    public void deadQueen(){
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\rabbit_img2_40.png");
+        imageLabel.setIcon(image);
+        //Audio for Method
+//        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_01_13-01_01_16.wav";
+//        se.setFile(clickSound);
+//        se.play();
+
+        position = "deadQueen";
+        mainTextArea.setText("The Queen is Dead! And so are you!");
+        choice1.setText(">>>");
+        choice2.setText("");
+        choice3.setText("");
+
+        choice1.setVisible(true);
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+
+    }
+//
+    public void queenCroquet(){
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\rabbit_with_baby_40.png");
+        imageLabel.setIcon(image);
+        //Audio for Method
+//        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_01_13-01_01_16.wav";
+//        se.setFile(clickSound);
+//        se.play();
+
+        position = "queenCroquet";
+        mainTextArea.setText("She asks you to play croquet. You decide yes.");
+        choice1.setText("");
+        choice2.setText("");
+        choice3.setText(">>>");
+
+        choice1.setVisible(false);
+        choice2.setVisible(false);
+        choice3.setVisible(true);
+
+    }
+
+    public void namelessCrime(){
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\rabbit_with_baby_40.png");
+        imageLabel.setIcon(image);
+        //Audio for Method
+//        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_22_44-01_22_50.wav";
+//        se.setFile(clickSound);
+//        se.play();
+
+        position = "namelessCrime";
+        mainTextArea.setText("You start to realize that this is not what you thought.\nYour mind is fuzzy and suddenly you are standing before a jury with the " +
+                "King and Queen at the forefront accusing you of a nameless\n crime!\nThey want to know if you committed the crime.\nThey are upset and want with you to apologize.\n");
+        choice1.setText("Apologize");
+        choice2.setText("Shake head");
+        choice3.setText("No");
+
+        choice1.setVisible(true);
+        choice2.setVisible(true);
+        choice3.setVisible(true);
+
+    }
+    public void allHappy(){
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\rabbit_with_baby_40.png");
+        imageLabel.setIcon(image);
+        //Audio for Method
+//        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_22_44-01_22_50.wav";
+//        se.setFile(clickSound);
+//        se.play();
+
+        position = "allHappy";
+        mainTextArea.setText("All are happy. You dance with all!");
+        choice1.setText(">>>");
+        choice2.setText("");
+        choice3.setText("");
+
+        choice1.setVisible(true);
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+
+    }
+    public void offWithHerHead(){
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\rabbit_with_baby_40.png");
+        imageLabel.setIcon(image);
+        //Audio for Method
+        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_22_44-01_22_50.wav";
+        se.setFile(clickSound);
+        se.play();
+
+        position = "offWithHerHead";
+        mainTextArea.setText("Off with her head they proclaim\n\n\nSuddenly you awake.");
+        choice1.setText("");
+        choice2.setText("");
+        choice3.setText(">>>");
+
+        choice1.setVisible(false);
+        choice2.setVisible(false);
+        choice3.setVisible(true);
+
+    }
+    public void allADream(){
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\rabbit_with_baby_40.png");
+        imageLabel.setIcon(image);
+        //Audio for Method
+        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_01_25_00-01_25_10.wav";
+        se.setFile(clickSound);
+        se.play();
+
+        position = "allADream";
+        mainTextArea.setText("You are safe now. It was all a dream. After all you are alive.\nYou look to the corner of the room and see the rabbit that was" +
+                "there before is now gone with the nails that held him left behind\nYou decide to take matters into your own hands. You grab a pair of scissors from the rabbits glass box\n" +
+                "You realize you were the queen.");
+        choice1.setText("");
+        choice2.setText("");
+        choice3.setText(">>>");
+
+        choice1.setVisible(false);
+        choice2.setVisible(false);
+        choice3.setVisible(true);
+
+    }
 
 
 
@@ -287,17 +638,29 @@ public class Game {
 
 
 
-//    public void gameEnding(){
-//        position = "gameEnding";
-//        mainTextArea.setText("             THE END ");
-//        choice1.setText("");
-//        choice2.setText("");
-//        choice3.setText("");
-//    }
+    public void gameEnding(){
+        position = "gameEnding";
+        mainTextArea.setText("                     The End ");
+        choice1.setText("");
+        choice2.setText("");
+        choice3.setText("");
+
+        choice1.setVisible(false);
+        choice2.setVisible(false);
+        choice3.setVisible(false);
+    }
 
     public void gameOver(){
 
-        imageLabel.setVisible(false);
+
+        clickSound = "C:\\Users\\tello\\Alice2\\src\\joaquin\\Alice_Dies_Mario_Sound.wav";
+
+        se.setFile(clickSound);
+        se.play();
+        image = new ImageIcon("C:\\Users\\tello\\Alice2\\src\\joaquin\\game_over.png");
+        imageLabel.setIcon(image);
+
+        imageLabel.setVisible(true);
 
         position = "gameOver";
         mainTextArea.setText("You are dead!!\n\n\n  " +
@@ -305,6 +668,7 @@ public class Game {
         choice1.setText("");
         choice2.setText("");
         choice3.setText("");
+
 
         choice1.setVisible(false);
         choice2.setVisible(false);
@@ -322,6 +686,8 @@ public class Game {
         public void actionPerformed(ActionEvent event){
 
             createGameScreen();
+            se.setFile(clickSound);
+            se.play();
         }
     }
 
@@ -331,49 +697,175 @@ public class Game {
 
             String yourChoice = event.getActionCommand();
 
-            switch (position){
+            switch (position) {
                 case "beginningScene":
-                    switch(yourChoice) {
+                    switch (yourChoice) {
                         case "c1":
                             rabbitStage();
                             break;
                     }
                     break;
                 case "rabbitStage":
-                    switch(yourChoice){
-                    case "c1": stayStill(); break;
-                        case "c2": pushLadder(); break;
-                }
-                break;
-                case "stayStill":
-                        switch(yourChoice){
-                            case"c1":gameOver();  break;
-                        }
-                        break;
-                case"pushLadder":
-                    switch(yourChoice){
-                        case"c1": rabbitDoesNotGiveUp(); break;
-                    }
-                    break;
-                case"rabbitDoesNotGiveUp":
                     switch (yourChoice) {
-                        case "c1": deadMinion(); break;
+                        case "c1":
+                            stayStill();
+                            break;
+                        case "c2":
+                            pushLadder();
+                            break;
                     }
                     break;
-                case"deadMinion":
-                    switch (yourChoice){
-                        case "c1": babyCrying(); break;
+                case "stayStill":
+                    switch (yourChoice) {
+                        case "c1":
+                            gameOver();
+                            break;
                     }
                     break;
-                case"babyCrying":
-                    switch (yourChoice){
-                        case "c1": fishFootMan(); break;
+                case "pushLadder":
+                    switch (yourChoice) {
+                        case "c1":
+                            rabbitDoesNotGiveUp();
+                            break;
                     }
                     break;
-                case"fishFootMan":
-                    switch (yourChoice){
-                        case "c1": frogFootMan(); break;
+                case "rabbitDoesNotGiveUp":
+                    switch (yourChoice) {
+                        case "c1":
+                            deadMinion();
+                            break;
                     }
+                    break;
+                case "deadMinion":
+                    switch (yourChoice) {
+                        case "c1":
+                            babyCrying();
+                            break;
+                    }
+                    break;
+                case "babyCrying":
+                    switch (yourChoice) {
+                        case "c1":
+                            fishFootMan();
+                            break;
+                    }
+                    break;
+                case "fishFootMan":
+                    switch (yourChoice) {
+                        case "c1":
+                            frogFootMan();
+                            break;
+                    }
+                    break;
+                case "frogFootMan":
+                    switch (yourChoice) {
+                        case "c1":
+                            eatingFly();
+                            break;
+                    }
+                    break;
+                case "eatingFly":
+                    switch (yourChoice) {
+                        case "c1":
+                            frogmanLeaves();
+                            break;
+                    }
+                    break;
+                case "frogmanLeaves":
+                    switch (yourChoice) {
+                        case "c1":
+                            askRabbit();
+                            break;
+                    }
+                    break;
+                case "askRabbit":
+                    switch (yourChoice) {
+                        case "c1":
+                            gameOver();
+                            break;
+                        case "c2":
+                            babyThrown();
+                            break;
+                    }
+                    break;
+                case "babyThrown":
+                    switch (yourChoice) {
+                        case "c1":
+                            queenNote();
+                            break;
+                        case "c2":
+                            whoCares();
+                            break;
+                    }
+                    break;
+                case "whoCares":
+                    switch (yourChoice) {
+                        case "c2":
+                            gameOver();
+                            break;
+                    }
+
+                break;
+                case "queenNote":
+                    switch (yourChoice) {
+                        case "c1":
+                            noRoom();
+                            break;
+                    }
+                break;
+                case"noRoom":
+                    switch (yourChoice){
+                        case"c2": climbSteps();break;
+                    }
+                    break;
+                case "climbSteps":
+                    switch (yourChoice){
+                        case "c1": followQueen();break;
+                    }
+                    break;
+                case "followQueen":
+                    switch (yourChoice){
+                        case"c1": queenCroquet(); break;
+                        case"c2": deadQueen(); break;
+                    }
+                    break;
+                case "deadQueen":
+                    switch (yourChoice){
+                        case"c3": gameOver(); break;
+                    }
+
+                    break;
+                case "queenCroquet":
+                    switch (yourChoice){
+                        case"c3": namelessCrime(); break;
+                    }
+                    break;
+                case"namelessCrime":
+                    switch (yourChoice){
+                        case"c1":  allHappy(); break;
+                        case"c2": offWithHerHead(); break;
+                        case"c3": allADream(); break;
+                    }
+                    break;
+                case "allHappy":
+                    switch (yourChoice){
+                        case"c1": allADream(); break;
+                    }
+                    break;
+                case "offWithHerHead":
+                    switch (yourChoice){
+                        case"c3": allADream(); break;
+                    }
+                    break;
+                case "allADream":
+                    switch (yourChoice){
+                        case"c3": gameEnding(); break;
+                    }
+
+
+
+
+
 
 
             }
